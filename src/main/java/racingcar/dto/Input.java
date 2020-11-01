@@ -2,31 +2,24 @@ package racingcar.dto;
 
 import racingcar.domain.RacingCar;
 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class Input {
-    public final List<String> namesOfCars;
-    public final int numberOfCountToTry;
+    public int numberOfCar;
+    public int numberOfCountToTry;
 
-    private Input(List<String> namesOfCars, int numberOfCountToTry) {
-        this.namesOfCars = namesOfCars;
+    private Input(int numberOfCar, int numberOfCountToTry) {
+        this.numberOfCar = numberOfCar;
         this.numberOfCountToTry = numberOfCountToTry;
     }
 
     public List<RacingCar> toRacingCars() {
-        List<RacingCar> racingCars = namesOfCars.stream()
-                .map(RacingCar::new)
-                .collect(Collectors.toList());
-
-        validateRacingCars(racingCars);
-        return racingCars;
-    }
-
-    private void validateRacingCars(List<RacingCar> racingCars) {
-        if (racingCars.isEmpty()) {
-            throw new IllegalStateException("There is no car name entered correctly.");
+        List<RacingCar> racingCars = new ArrayList<>();
+        for (int i = 0; i < numberOfCar; i++) {
+            racingCars.add(new RacingCar(numberOfCountToTry));
         }
+        return racingCars;
     }
 
     public static Builder builder() {
@@ -34,13 +27,13 @@ public class Input {
     }
 
     public static class Builder {
-        private List<String> namesOfCars;
+        private int numberOfCar;
         private int numberOfCountToTry;
 
         private Builder() {}
 
-        public Builder namesOfCars(List<String> namesOfCars) {
-            this.namesOfCars = namesOfCars;
+        public Builder numberOfCar(int numberOfCar) {
+            this.numberOfCar = numberOfCar;
             return this;
         }
 
@@ -50,7 +43,7 @@ public class Input {
         }
 
         public Input build() {
-            return new Input(this.namesOfCars, this.numberOfCountToTry);
+            return new Input(this.numberOfCar, this.numberOfCountToTry);
         }
     }
 }
