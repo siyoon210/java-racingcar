@@ -1,6 +1,10 @@
 package racingcar;
 
-import java.util.ArrayList;
+import racingcar.domain.RacingCar;
+import racingcar.dto.Input;
+import racingcar.inputview.InputHandler;
+import racingcar.resultview.ResultView;
+
 import java.util.List;
 
 public class RacingCarGame {
@@ -12,18 +16,19 @@ public class RacingCarGame {
         this.resultView = resultView;
     }
 
-    public void game() {
-        Input racingCarInputResult = inputHandler.getInput();
-        List<RacingCar> racingCars = new ArrayList<>();
-        for (int i = 0; i < racingCarInputResult.numberOfCar; i++) {
-            racingCars.add(new RacingCar(racingCarInputResult.numberOfCountToTry));
-        }
+    public void start() {
+        Input input = inputHandler.getInput();
+        List<RacingCar> racingCars = input.toRacingCars();
 
-        for (int i = 0; i < racingCarInputResult.numberOfCountToTry; i++) {
-            for (RacingCar racingCar : racingCars) {
-                racingCar.tryToMove();
-            }
+        for (int i = 0; i < input.numberOfCountToTry; i++) {
+            tryToMoveRacingCars(racingCars);
             resultView.print(racingCars);
+        }
+    }
+
+    private void tryToMoveRacingCars(List<RacingCar> racingCars) {
+        for (RacingCar racingCar : racingCars) {
+            racingCar.tryToMove();
         }
     }
 }

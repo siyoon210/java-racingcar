@@ -1,12 +1,25 @@
-package racingcar;
+package racingcar.dto;
+
+import racingcar.domain.RacingCar;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class Input {
-    public int numberOfCar;
-    public int numberOfCountToTry;
+    public final int numberOfCar;
+    public final int numberOfCountToTry;
 
     private Input(int numberOfCar, int numberOfCountToTry) {
         this.numberOfCar = numberOfCar;
         this.numberOfCountToTry = numberOfCountToTry;
+    }
+
+    public List<RacingCar> toRacingCars() {
+        List<RacingCar> racingCars = new ArrayList<>();
+        for (int i = 0; i < numberOfCar; i++) {
+            racingCars.add(new RacingCar());
+        }
+        return racingCars;
     }
 
     public static Builder builder() {
