@@ -3,7 +3,7 @@ package racingcar.domain;
 import racingcar.util.JavaUtilRandom;
 import racingcar.util.RandomUtil;
 
-public class RacingCar implements Comparable<RacingCar>{
+public class RacingCar implements Comparable<RacingCar> {
     public static final int AVAILABLE_MAX_NAME_LENGTH = 5;
     private static final int RANDOM_BOUND = 10;
     private static final int MIN_MOVABLE_NUM = 4;
@@ -52,6 +52,24 @@ public class RacingCar implements Comparable<RacingCar>{
 
     @Override
     public int compareTo(RacingCar racingCar) {
+        if (moveCount == racingCar.moveCount) {
+            return name.compareTo(racingCar.name);
+        }
         return Integer.compare(racingCar.moveCount, moveCount);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof RacingCar)) return false;
+
+        RacingCar racingCar = (RacingCar) o;
+
+        return name != null ? name.equals(racingCar.name) : racingCar.name == null;
+    }
+
+    @Override
+    public int hashCode() {
+        return name != null ? name.hashCode() : 0;
     }
 }
